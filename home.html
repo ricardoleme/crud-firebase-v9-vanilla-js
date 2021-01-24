@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <title>First Crud Firebase</title>
+</head>
+<body>
+  <div class="col-md-4">
+    <a href="create.html">
+      <button class="btn btn-lg btn-block btn-primary">Create</button>
+    </a>
+    <br>
+    <a href="users.html">
+      <button class="btn btn-lg btn-block btn-success">Read</button>
+    </a>
+    <br>
+    <a href="update.html">
+      <button class="btn btn-lg btn-block btn-secondary">Update</button>
+    </a>
+    <a href="update.html">
+      <button class="btn btn-lg btn-block btn-secondary">Delete</button>
+    </a>
+  </div>
+
+  <ul id="users-list"></ul>
+  
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-database.js"></script>
+
+  <script src="js/script.js"></script>  
+</body>
+</html>
