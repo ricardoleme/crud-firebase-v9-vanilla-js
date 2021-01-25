@@ -1,13 +1,23 @@
-var usersList = document.getElementById('users-list')
+var usersTable = document.getElementById('content')
 
 firebase.database().ref('users').on('value', (snapshot) => {
   snapshot.forEach(item => {
-    usersList.innerHTML += ''
+
+    var tr = document.createElement('tr')
     
-    var li = document.createElement('li')
+    var tdName = document.createElement('td')
 
-    li.appendChild(document.createTextNode(item.val().name + ': ' + item.val().age))
+    tdName.innerHTML = item.val().name
 
-    usersList.appendChild(li)
+    var tdAge = document.createElement('td')
+
+    tdAge.innerHTML = item.val().age
+
+    //li.appendChild(document.createTextNode(item.val().name + ': ' + item.val().age))
+
+    tr.appendChild(tdName)
+    tr.appendChild(tdAge)
+
+    usersTable.appendChild(tr)
   })
 })

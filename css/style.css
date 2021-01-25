@@ -18,8 +18,16 @@ a:hover{
 }
 
 table{
-  border: 1px solid #111;
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
 }
-table td {
-  border: 1px solid #111;
+
+tr, th, td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
