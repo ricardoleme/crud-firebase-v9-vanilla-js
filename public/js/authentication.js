@@ -22,6 +22,7 @@ createUserButton.addEventListener('click', () => {
     .createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
     .then(() => {
       alert('Bem vindo: ' + emailInput.value)
+      
       window.location.href = `${baseURL}/home.html`
     })
     .catch(error => {
@@ -40,6 +41,7 @@ authEmailPassButton.addEventListener('click', () => {
       console.log(result.user.uid)
       displayName.innerText = "Bem vindo, " + emailInput.value
       alert('Bem vindo: ' + emailInput.value)
+      console.log(baseURL)
       window.location.href = `${baseURL}/home.html`
     })
     .catch(error => {
