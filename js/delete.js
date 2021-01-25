@@ -1,19 +1,19 @@
 var emailInput = document.getElementById('emailInput')
 var addButton = document.getElementById('addButton')
 
-var updateForm = document.getElementById('updateForm')
+var deleteForm = document.getElementById('deleteForm')
 var nameInput = document.getElementById('nameInput')
 var ageInput = document.getElementById('ageInput')
-var updateButton = document.getElementById('updateButton')
+var deleteButton = document.getElementById('deleteButton')
 
 var db
 var id
 
 addButton.addEventListener('click', () => {
-  update(emailInput.value)
+  deleteUser(emailInput.value)
 })
 
-function update(email){
+function deleteUser(email){
   firebase.database().ref('users').on('value', (snapshot) => {
   
     snapshot.forEach(item => {
@@ -31,12 +31,16 @@ function update(email){
   })
 }
 
-updateButton.addEventListener('click', () => {
-  firebase.database().ref().child(db + '/' + id).update({
-    name: nameInput.value, 
-    age: ageInput.value
-  }).then(
-    alert('Atualização feita')
-    )
-})
+deleteButton.addEventListener('click', () => {
+  let user = firebase.database().ref().child(db + '/' + id)
 
+  user.remove()
+    .then( () => {
+      alert('Usuário excluído')
+    })
+    .catch(error => {
+      console.log(error.code)
+      console.log(error.message)
+      alert('Falha ao excluir, verifique o erro no console')
+    })
+})

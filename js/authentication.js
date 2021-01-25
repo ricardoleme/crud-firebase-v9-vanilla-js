@@ -11,13 +11,13 @@ var passwordInput = document.getElementById('passwordInput')
 var displayName = document.getElementById('displayName')
 
 //Criar novo usuário
-
 createUserButton.addEventListener('click', () => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
     .then(() => {
       alert('Bem vindo: ' + emailInput.value)
+      window.location.href = "http://localhost:8080/home.html"
     })
     .catch(error => {
       console.log(error.code)
@@ -34,11 +34,8 @@ authEmailPassButton.addEventListener('click', () => {
     .then(result => {
       console.log(result.user.uid)
       displayName.innerText = "Bem vindo, " + emailInput.value
-      alert("Autenticado " , emailInput.value)
-      console.log()
-      // setTimeout(() => {
-      //   window.location = 'http://localhost:8080/home.html'
-      // }, 1000);
+      alert('Bem vindo: ' + emailInput.value)
+      window.location.href = "http://localhost:8080/home.html"
     })
     .catch(error => {
       console.log(error.code)
@@ -46,32 +43,3 @@ authEmailPassButton.addEventListener('click', () => {
       alert('Falha ao cadastrar, verifique o erro no console')
     })
 })
-
-//Logout
-logOutButton.addEventListener('click', () => {
-  firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      displayName.innerText = "Você não está autenticado"
-      alert("Você se deslogou")
-    })
-    .catch(error => {
-      console.log(error.code)
-    })
-})
-
-function signIn(provider){
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then(result => {
-      console.log(result)
-      var token = result.credential.accessToken
-      displayName.innerText = 'Bem vindo, ' + result.user.displayName
-    })
-    .catch(error => {
-      console.log(error)
-      alert('Falha na autenticação')
-    })
-}

@@ -9,26 +9,31 @@
 </head>
 <body>
   <div class="col-md-4">
-    <form >
+    <form>
       <div class="form-group">
         <label for="emailInput">E-mail</label>
         <input type="email" class="form-control" id="emailInput" placeholder="Email">
-      </div>
+      </div>     
+    </form>
+    <button class="btn btn-lg btn-block btn-primary" id="addButton">Usuário</button>
+  </div> 
+  <div class="col-md-4"> 
+    <form id="deleteForm" style="display: block;">
       <div class="form-group">
         <label for="nameInput">Nome</label>
-        <input type="text" class="form-control" id="nameInput" placeholder="Nome">
+        <input type="text" class="form-control" id="nameInput" >
       </div>
       <div class="form-group">
         <label for="ageInput">Idade</label>
-        <input type="number" class="form-control" id="ageInput" placeholder="Idade">
+        <input type="number" class="form-control" id="ageInput">
       </div>
       <br>
       
-      <button class="btn btn-lg btn-block btn-primary" id="addButton">Adicionar</button>
+      <button class="btn btn-lg btn-block btn-danger" id="deleteButton">Deletar</button>
     </form>
   </div>
-
-  <a class="button button-clear" href="home.html">Voltar para home</a>
+  <br>
+  <a class="button button-clear" id="returnHomeButton" href="home.html">Voltar para home</a>
   
   <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-analytics.js"></script>
@@ -36,6 +41,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-database.js"></script>
 
   <script src="js/script.js"></script>
-  <script src="js/createUser.js"></script>
+  <script src="js/delete.js"></script>
 </body>
 </html>

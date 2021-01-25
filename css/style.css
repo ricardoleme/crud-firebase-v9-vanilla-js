@@ -12,3 +12,14 @@ body{
   align-items: center;
   justify-content: center;
 }
+
+a:hover{
+  text-decoration: none;
+}
+
+table{
+  border: 1px solid #111;
+}
+table td {
+  border: 1px solid #111;
+}
