@@ -13,10 +13,13 @@ firebase.database().ref('users').on('value', (snapshot) => {
 
     tdAge.innerHTML = item.val().age
 
-    //li.appendChild(document.createTextNode(item.val().name + ': ' + item.val().age))
+    var tdEmail = document.createElement('td')
+
+    tdEmail.innerHTML = item.val().email
 
     tr.appendChild(tdName)
     tr.appendChild(tdAge)
+    tr.appendChild(tdEmail)
 
     usersTable.appendChild(tr)
   })

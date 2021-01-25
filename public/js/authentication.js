@@ -1,7 +1,6 @@
 //Buttons
 var authEmailPassButton = document.getElementById('authEmailPassButton')
 var createUserButton = document.getElementById('createUserButton')
-var logOutButton = document.getElementById('logOutButton')
 
 //Inputs
 var emailInput = document.getElementById('emailInput')
@@ -22,7 +21,6 @@ createUserButton.addEventListener('click', () => {
     .createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
     .then(() => {
       alert('Bem vindo: ' + emailInput.value)
-      
       window.location.href = `${baseURL}/home.html`
     })
     .catch(error => {
@@ -38,10 +36,8 @@ authEmailPassButton.addEventListener('click', () => {
     .auth()
     .signInWithEmailAndPassword(emailInput.value, passwordInput.value)
     .then(result => {
-      console.log(result.user.uid)
       displayName.innerText = "Bem vindo, " + emailInput.value
       alert('Bem vindo: ' + emailInput.value)
-      console.log(baseURL)
       window.location.href = `${baseURL}/home.html`
     })
     .catch(error => {
