@@ -1,33 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <!-- Bootstrap 5-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="images/fatecitu.png">
   <link rel="stylesheet" href="css/style.css">
-  <title>First Crud Firebase</title>
+  <title>Menu Inicial</title>
 </head>
-<body onload="verificaLogado()">
+<body onload="verificaLogado();obtemDados('users')">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Fatec Itu</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="#">Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Clientes</a>
+            <a class="nav-link" href="alunos.html">Alunos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="#">Produtos</a>
           </li>
         </ul>
       </div>
-      <div class="text-right" id="myNavbar">
+      <div class="text-right">
         <ul class="navbar-nav ms-auto flex-nowrap">
             <li class="nav-item">
               <button class="btn  btn-block btn-danger" onclick="logoutFirebase()">Logout</button>
@@ -36,6 +40,22 @@
     </div>
     </div>
   </nav>
+  <div class="container">
+    <div class="col">
+
+    </div>
+    <div class="col">
+      <table id="tabelaDados" class="table table-striped table-bordered">        
+        <tr class="table-info">
+          <th >Nome</th>
+          <th >Idade</th>
+          <th >E-mail</th>
+          <th>Opções</th>
+        </tr>        
+      <!-- Conteúdo do Firebase será inserido aqui -->
+      </table>
+    </div>
+  </div>
 
   <div class="col-md-4">
     <a href="create.html">
@@ -50,9 +70,9 @@
       <button class="btn btn-lg btn-block btn-warning">Update</button>
     </a>
     <br>
-    <a href="delete.html">
-      <button class="btn btn-lg btn-block btn-danger">Delete</button>
-    </a>
+    
+      <button class="btn btn-lg btn-block btn-danger" onclick="adiciona('users','i')">Adiciona</button>
+    
    
   </div>
 
@@ -62,6 +82,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-database.js"></script>
 
   <script src="js/firebase.js"></script>  
-  <script src="js/authentication.js"></script> 
+  <script src="js/authentication.js"></script>
+  <script src="js/getTabela.js"></script> 
 </body>
 </html>
