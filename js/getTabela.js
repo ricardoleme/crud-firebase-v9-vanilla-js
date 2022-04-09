@@ -29,6 +29,12 @@ function obtemDados(collection) {
       <button class='btn btn-sm btn-info' onclick=alterar('${db}','${id}')>✏️ Editar</button>`
 
     })
+    let rodape = tabela.insertRow()
+    rodape.className = 'table-info'
+    rodape.insertCell().textContent = ''
+    rodape.insertCell().textContent = ''
+    rodape.insertCell().textContent = ''
+    rodape.insertCell().innerHTML = totalRegistros(collection)
   })
 }
 
@@ -40,16 +46,19 @@ function obtemDados(collection) {
  * @return {null} - Snapshot atualizado dos dados
  */
 function remover(db, id) {
+  if (window.confirm("⚠️Confirma a exclusão do registro?")) {
   let dadoExclusao = firebase.database().ref().child(db + '/' + id)
   dadoExclusao.remove()
     .then(() => {
       alert('✅ Registro removido com sucesso!')
+      new bootstrap.Alert('aoagai')
     })
     .catch(error => {
       console.log(error.code)
       console.log(error.message)
       alert('❌ Falha ao excluir: ' + error.message)
     })
+}
 }
 
 /**
@@ -82,7 +91,7 @@ function incluir(event, collection) {
 }
 
 function alterar(db, id) {
-  let dadoAlteracao = firebase.database().ref().child(db + '/' + id)
+  let dadoAlteracao = firebase.database().ref(db + '/' + id)
   console.log(dadoAlteracao)
 
   /*firebase
@@ -94,8 +103,13 @@ function alterar(db, id) {
 }
 
 function totalRegistros(collection){
+  var retorno = '...'
   firebase.database().ref(collection).on('value',(snap)=>{
-    var total =  snap.numChildren();
-    console.log("Total Registros : "+total);
-  });
+    if(snap.numChildren()===0){
+      retorno = '⚠️ Ainda não há nenhum registro cadastrado!'
+    } else {
+    retorno =  `Total de Registros: <span class="badge bg-primary"> ${snap.numChildren()} </span>`
+    }
+  })
+  return retorno
 }
