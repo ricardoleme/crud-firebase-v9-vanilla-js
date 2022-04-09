@@ -68,6 +68,7 @@ function incluir(event, collection) {
   //Obtendo os valores dos campos
   const values = Object.fromEntries(data.entries());
   //Enviando os dados dos campos para o Firebase
+  //firebase.database().ref('data').set({name:name});
   return firebase.database().ref(collection).push(values)
     .then(() => {
       alert('✅ Registro cadastrado com sucesso!')
@@ -83,4 +84,18 @@ function incluir(event, collection) {
 function alterar(db, id) {
   let dadoAlteracao = firebase.database().ref().child(db + '/' + id)
   console.log(dadoAlteracao)
+
+  /*firebase
+  .database()
+  .ref('users/' + auth.currentUser.uid)
+  .update({
+      displayName: displayName
+  });*/
+}
+
+function totalRegistros(collection){
+  firebase.database().ref(collection).on('value',(snap)=>{
+    var total =  snap.numChildren();
+    console.log("Total Registros : "+total);
+  });
 }
