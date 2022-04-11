@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/style.css">
   <title>Menu Inicial</title>
 </head>
-<body onload="verificaLogado();obtemDados('users')">
+<body onload="verificaLogado();obtemDados('pessoas')">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Fatec Itu</a>
@@ -23,7 +23,7 @@
             <a class="nav-link active" aria-current="page" href="#">Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="alunos.html">Alunos</a>
+            <a class="nav-link" href="home.html">Pessoas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Produtos</a>
@@ -44,32 +44,52 @@
     <p>⬆️Utilize o menu superior para ter acesso ao sistema</p> 
   </div>
   <div class="container-fluid">
+    <div class="row">
     <div class="col-md-5">
+      <h1 class="text-info">👤Formulário de Pessoas</h1>
       <form id="formCadastro">
         <div class="form-group">
-          <label for="emailInput">E-mail</label>
-          <input type="email" class="form-control" name="email" id="email" placeholder="Email" autofocus>
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" autofocus>
         </div>
         <div class="form-group">
-          <label for="nameInput">Nome</label>
-          <input type="text" class="form-control" name="name" id="name" placeholder="Nome">
+          <label for="email">E-mail</label>
+          <input type="email" class="form-control" name="email" id="email" placeholder="Email">
         </div>
         <div class="form-group">
-          <label for="ageInput">Idade</label>
-          <input type="number" class="form-control" name="age" id="age" placeholder="Idade">
+          <label for="nascimento">Nascimento</label>
+          <input type="date" class="form-control" name="nascimento" id="nascimento" >
         </div>
-        <br>
+        <div class="form-group">
+          <label for="salario">Salário</label>
+          <input type="number" class="form-control" name="salario" id="salario" min="0" step="0.01" >
+        </div>
+       
+        <div class="form-group my-2" >
+          <label for="sexo">Sexo</label>
+          <input type="radio" class="btn-check" name="sexo" id="sexoM"  value="Masculino" checked>
+          <label class="btn btn-outline-info" for="sexoM">♂️ Masculino</label>
         
-        <button class="btn btn-block btn-primary" onclick="incluir(event, 'users')">💾 Salvar</button>
+          <input type="radio" class="btn-check" name="sexo" id="sexoF" value="Feminino">
+          <label class="btn btn-outline-danger" for="sexoF">♀️ Feminino</label>
+        </div>
+        <div class="form-group">
+          <input type="hidden" class="form-control" name="id" id="id" >
+        </div>
+        <button class="btn btn-block btn-primary my-4" onclick="salvar(event, 'pessoas')">💾 Salvar</button>
+        <button class="btn btn-block btn-warning my-4" onclick="document.getElementById('formCadastro').reset()">🔃 Limpar</button>
       </form>
     </div>
-    <div class="col-md-6">
+  
+
+    <div class="col-md-7">
+      <h1 class="text-info">📝Listagem de Pessoas</h1>
       <table id="tabelaDados" class="table table-striped table-bordered">    
       <!-- Conteúdo do Firebase será inserido aqui -->
       </table>
     </div>
   </div>
-
+</div>
 <!-- Firebase Google -->
   <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-analytics.js"></script>
@@ -80,6 +100,7 @@
 <!-- Nossos scripts -->
   <script src="js/firebase.js"></script>  
   <script src="js/authentication.js"></script>
-  <script src="js/getTabela.js"></script> 
+  <script src="js/dados.js"></script> 
 </body>
 </html>
+
