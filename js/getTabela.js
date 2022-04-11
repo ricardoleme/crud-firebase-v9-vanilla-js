@@ -26,7 +26,7 @@ function obtemDados(collection) {
       novaLinha.insertCell().textContent = item.val().age
       novaLinha.insertCell().textContent = item.val().email
       novaLinha.insertCell().innerHTML = `<button class='btn btn-sm btn-danger' onclick=remover('${db}','${id}')>🗑 Excluir</button>
-      <button class='btn btn-sm btn-info' onclick=alterar('${db}','${id}')>✏️ Editar</button>`
+      <button class='btn btn-sm btn-info' onclick=carregaDadosAlteracao('${db}','${id}')>✏️ Editar</button>`
 
     })
     let rodape = tabela.insertRow()
@@ -90,16 +90,18 @@ function incluir(event, collection) {
     })
 }
 
-function alterar(db, id) {
-  let dadoAlteracao = firebase.database().ref(db + '/' + id)
-  console.log(dadoAlteracao)
+function carregaDadosAlteracao(db, id) {
+  firebase.database().ref(db).on('value', (snapshot) => {
+      snapshot.forEach(item => {
+      if(item.ref.path.pieces_[1] === id){
+        document.getElementById('name').value = item.val().name
+        document.getElementById('email').value = item.val().email
+        document.getElementById('age').value = item.val().age
 
-  /*firebase
-  .database()
-  .ref('users/' + auth.currentUser.uid)
-  .update({
-      displayName: displayName
-  });*/
+
+      }
+    })
+  })
 }
 
 function totalRegistros(collection){
