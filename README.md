@@ -14,12 +14,14 @@ O propósito desse pequeno sistema é mostrar que é possível desenvolvermos um
 - [ ] Acesse https://firebase.google.com e crie um novo projeto.
 - [ ] Renomeie o arquivo firebase-example.js para firebase.js e copie as informações apresentadas pelo Firebase.
 - [ ] Acesse Realtime Database e em regras, informe que apenas usuários autenticados terão direito aos dados:
+```json
 {
   "rules": {
     ".read": "auth != null",
     ".write": "auth != null"
   }
 }
+```
 
 - [ ] Abra o arquivo index.html no seu navegador, crie um novo usuário e navegue pelo seu CRUD!
 
