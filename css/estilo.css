@@ -6,6 +6,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to right, rgba(13, 110, 253,0.1), rgba(13, 110, 253,0.9));
+  background: linear-gradient(to right, #FB724C, #FEDCD2);
 }
 
