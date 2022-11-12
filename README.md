@@ -1,4 +1,4 @@
-# 🔥 CRUD com autenticação integrado ao Firebase utilizando apenas HTML, CSS e Javascript
+# 🔥 CRUD com autenticação integrado ao Firebase (v.8 SDK) utilizando apenas HTML, CSS e Javascript puro
 
 Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD.
 
