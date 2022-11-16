@@ -1,9 +1,26 @@
 /**
+ * Copyright 2023 Prof. Ms. Ricardo Leme All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 'use strict' //modo estrito
+
+/**
  * novoUsuario.
  * Cria um novo usuário no Firebase.
- * @param {string} email - e-mail do usuário
- * @param {string} senha - Senha do usuário
- * @return {object} - O usuário criado
+ * @param {string} email e-mail do usuário
+ * @param {string} senha Senha do usuário
+ * @return {object} O usuário criado
  */
 function novoUsuario(email, senha) {
   firebase
@@ -11,7 +28,7 @@ function novoUsuario(email, senha) {
     .createUserWithEmailAndPassword(email, senha)
     .then((result) => {
       console.log(`Usuário Logado: ${JSON.stringify(result.user)}`)
-      window.location.href = `/home.html`
+      window.location.href = `/home.html` //Direcionamos o usuário para a tela inicial
     })
     .catch(error => {
       console.error(error.code)
@@ -23,16 +40,16 @@ function novoUsuario(email, senha) {
 /**
  * loginFirebase.
  * Realiza a autenticação do usuário no Firebase.
- * @param {string} email - e-mail do usuário
- * @param {string} senha - Senha do usuário
- * @return {object} - O usuário logado
+ * @param {string} email e-mail do usuário
+ * @param {string} senha Senha do usuário
+ * @return {object} O usuário logado
  */
 function loginFirebase(email, senha) {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, senha)
     .then(result => {
-      //console.log(result.user)
+      console.log(result.user)
       window.location.href = `/home.html`
     })
     .catch(error => {
@@ -41,14 +58,19 @@ function loginFirebase(email, senha) {
     })
 }
 
+/**
+ * loginGoogle.
+ * Realiza a autenticação do usuário utilizando a conta Google do mesmo.
+ * @return {object} O usuário logado
+ */
 function loginGoogle() {
-  //Não esqueça de adicionar o endereço 127.0.0.1 em Authentication/Settings no Firebase
+  //Não esqueça de adicionar também o endereço 127.0.0.1 em Authentication/Settings no Firebase
   const provider = new firebase.auth.GoogleAuthProvider()
   firebase
     .auth()
     .signInWithPopup(provider)
     .then((result) => {
-      window.localStorage.setItem('usuario', JSON.stringify(result.user))
+      console.log(`Usuário Google: ${JSON.stringify(result.user)}`)
       window.location.href = `/home.html`
     }).catch((error) => {
       alerta(`Erro: Não foi possível efetuar o login <br> ${errors[error.code]}`, 'danger')
@@ -58,7 +80,7 @@ function loginGoogle() {
 /**
  * logoutFirebase.
  * Realiza o logout do usuário no Firebase.
- * @return {null} - Redireciona o usuário para o login
+ * @return {null} Redireciona o usuário para o login
  */
 function logoutFirebase() {
   firebase
@@ -66,7 +88,7 @@ function logoutFirebase() {
     .signOut()
     .then(function () {
       window.location.href = '/'
-      window.localStorage.removeItem('usuario')
+      localStorage.removeItem('usuarioId') //Remove o id do usuário atual no Local Storage
     })
     .catch(function (error) {
       alerta(`Erro: Não foi possível efetuar o logout <br> ${errors[error.code]}`, 'danger')
@@ -76,19 +98,21 @@ function logoutFirebase() {
 /**
  * verificaLogado.
  * Verifica se o usuário deve ter acesso a página que será carregada
- * @return {null} - Caso não esteja logado, redireciona para o início
+ * @return {null} Caso não esteja logado, redireciona para o início
  */
 function verificaLogado() {
   firebase
     .auth()
     .onAuthStateChanged(user => {
       if (user) {
-        console.log(`Usuário ${user.email} logado!`)
+        //Salva o id do usuário atual no Local Storage
+        localStorage.setItem('usuarioId', user.uid) 
+        //Salvamos os dados do usuário logado na collection usuarios
+        salvaDadosUsuario(user.uid, user.displayName, user.email, user.photoURL)
         //Coloca a foto do usuário ao lado do botáo Logout
-        let dadosUsuario = JSON.parse(window.localStorage.getItem('usuario'))
         let imagemUsuario = document.getElementById('imagemUsuario')
-        dadosUsuario ? imagemUsuario.innerHTML = `<img src="${dadosUsuario.photoURL}" alt="Foto do Usuário" title="${dadosUsuario.displayName}" class="img rounded-circle pe-2" width="64" />`
-                     : imagemUsuario.innerHTML = `<img src="https://robohash.org/${user.email}" alt="Foto do Usuário" title="${user.email}" class="img rounded-circle pe-2" width="48" />`
+        user.photoURL ? imagemUsuario.innerHTML = `<img src="${user.photoURL}" alt="Foto do Usuário" title="${user.displayName}" class="img rounded-circle pe-2 .d-sm-none" width="48" />`
+                      : imagemUsuario.innerHTML = `<img src="https://robohash.org/${user.email}" alt="Foto do Usuário" title="${user.email}" class="img rounded-circle pe-2" width="48" />`
       } else {
         console.error('Usuário não logado. Redirecionando...')
         window.location.href = '/'
@@ -96,6 +120,29 @@ function verificaLogado() {
     })
 }
 
+/**
+ * salvaDadosUsuario.
+ * Salva os dados do usuário corrente
+ * @param {integer} id id do usuário
+ * @param {string} nome Nome Completo do usuário
+ * @param {string} email E-mail do usuário
+ * @param {string} imagemUrl URL da imagem do usuário
+ * @return {null} Salva o usuário logado na collection usuarios
+ */
+ function salvaDadosUsuario(id, nome, email, imagemUrl) {
+  firebase.database().ref('usuarios/' + id).set({
+    usuario: nome,
+    email: email,
+    imagemPerfil : imagemUrl,
+    ultimoAcesso: new Date()
+  });
+}
+
+
+/**
+ * errors.
+ * Constante com a tradução em pt-BR dos principais erros de autenticação
+ **/
 const errors = {
   'auth/app-deleted': 'O banco de dados não foi localizado.',
   'auth/expired-action-code': 'O código da ação o ou link expirou.',
@@ -184,4 +231,3 @@ const errors = {
   'auth/insufficient-permission': 'A credencial utilizada não tem permissão para acessar o recurso solicitado.',
   'auth/internal-error': 'O servidor de autenticação encontrou um erro inesperado ao tentar processar a solicitação.'
 }
-

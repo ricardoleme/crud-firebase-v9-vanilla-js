@@ -1,3 +1,6 @@
+/* Ícones Bootstrap*/
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
+/* Para consultar a lista de ícones, acesse: https://icons.getbootstrap.com/ */
 
 .login{
   width: 100%;
@@ -9,3 +12,18 @@
   background: linear-gradient(to right, #FB724C, #FEDCD2);
 }
 
+.fundo-laranja-claro{
+  background-color: #FEDCD2;
+}
+
+.fundo-laranja-escuro{
+  background-color: #FB724C;
+}
+
+.laranja-escuro{
+  color: #FB724C;
+}
+
+.laranja-claro{
+  color: #FEDCD2;
+}

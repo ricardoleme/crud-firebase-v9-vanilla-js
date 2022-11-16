@@ -8,13 +8,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/fatecitu.png">
+  <link rel="stylesheet" href="css/estilo.css">
   <title>Menu Inicial</title>
 </head>
 
 <body onload="verificaLogado()">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-light fundo-laranja-claro">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Fatec Itu</a>
+      <a class="navbar-brand" href="#">Itu Gym</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -22,13 +23,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="home.html">Início</a>
+            <a class="nav-link active" aria-current="page" href="home.html"><i class="bi bi-house"></i> Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pessoas.html">Pessoas</a>
+            <a class="nav-link" href="clientes.html"><i class="bi bi-person-vcard"></i> Clientes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Produtos</a>
+            <a class="nav-link" href="#"><i class="bi bi-journal-check"></i> Relatórios</a>
           </li>
         </ul>
       </div>
@@ -37,18 +38,26 @@
          
           <div id="imagemUsuario"></div>
   <li class="nav-item">
-            <button class="btn  btn-block btn-danger" onclick="logoutFirebase()">🔓 Logout</button>
+            <button class="btn  btn-block fundo-laranja-escuro" onclick="logoutFirebase()"><i class="bi bi-box-arrow-in-right"></i> Logout</button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <div class="container-fluid p-2 bg-info text-dark text-center">
-    <h1>Sistema Administrativo</h1>
-    <p>⬆️Utilize o menu superior para ter acesso ao sistema</p>
+  <div class="container-fluid p-2 fundo-laranja-escuro text-light text-center">
+    <h1>Controle da Academia</h1>
+  
   </div>
-  <img src="images/undraw_happy_announcement.svg" alt="Seja bem vindo" title="Seja bem vindo"
-    class="mx-auto d-block w-50">
+
+  <div class="card mt-5 mx-auto" style="width: 20rem;">
+    <img src="images/undraw_happy_announcement.svg" alt="Seja bem vindo" title="Seja bem vindo">
+    <div class="card-body">
+      <h5 class="card-title">Seja bem vindo!</h5>
+      <p class="card-text"><i class="bi bi-arrow-up-left-square"></i> Utilize o menu superior para ter acesso a todas as opções do sistema</p>
+    </div>
+  </div>
+
+ 
   <footer class="bd-footer py-4 bg-light">
     <div class="container py-4">
       <div class="row">
@@ -59,18 +68,14 @@
       </div>
     </div>
   </footer>
-  <!-- Firebase Google -->
-  <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-database.js"></script>
-  <!-- Bootstrap 5 JS-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Nossos scripts -->
-  <script src="js/firebase.js"></script>
-  <script src="js/authentication.js"></script>
-  <script src="js/dados.js"></script>
-  <script src="js/util.js"></script>
+  <!-- Carregando os scripts do Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+  <!-- Carregamento dos scripts do projeto-->
+  <script src="js/firebase/firebase.js"></script>
+  <script src="js/firebase/authentication.js"></script>
+  <script src="js/util/alerta.js"></script>
 </body>
 
 </html>

@@ -2,58 +2,63 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bootstrap 5-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="images/fatecitu.png">
-  <link rel="stylesheet" href="css/estilo.css">
-  <title>Área Reservada</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/fatecitu.png">
+    <link rel="stylesheet" href="css/estilo.css">
+    <title>Área Reservada</title>
 </head>
 
 <body class="login">
-  <div class="card shadow-lg rounded">
-    <div class="text-center my-5">
-      <!-- m de margin e y de top e bottom. Saiba mais em: https://getbootstrap.com/docs/5.0/utilities/spacing/ -->
-      <img src="images/undraw_security_on.svg" alt="Efetuar o login" title="Efetuar o login" class="w-50">
-    </div>
-    <div class="card-header bg-warning">
-      <h5 class="card-title text-light">🔒 Área Reservada</h5>
-    </div>
-    <div class="card-body">
-      <form>
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input type="email" class="form-control" placeholder="E-mail do usuário" id="email" required autofocus>
+    <div class="card shadow-lg rounded">
+        <div class="text-center my-5">
+            <!-- m de margin e y de top e bottom. Saiba mais em: https://getbootstrap.com/docs/5.0/utilities/spacing/ -->
+            <img src="images/undraw_security_on.svg" alt="Efetuar o login" title="Efetuar o login" class="w-50">
         </div>
-        <div class="form-group">
-          <label for="senha">Senha</label>
-          <input type="password" class="form-control" placeholder="Senha do usuário" id="senha" required>
+        <div class="card-header fundo-laranja-escuro">
+            <h5 class="card-title laranja-claro"><i class="bi bi-key-fill"></i> Área Reservada</h5>
         </div>
-        <div class="mt-3">
-          <button type="submit" class="btn btn-outline-primary me-2 p-2" onclick="event.preventDefault(); loginFirebase(document.getElementById('email').value, 
-      document.getElementById('senha').value)">🔐 Login </button>
-      <button type="button" class="btn btn-primary me-2" onclick="event.preventDefault(); loginGoogle()">   <img src="images/logo-google.svg" alt="Efetuar o login com o Google" title="Login com o Google" width="28">
-    Logar com o Google </button>
+        <div class="card-body my-2">
+            <form id="formLogin">
+                <div class="form-group mt-2">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" placeholder="E-mail do usuário" id="email" required
+                        autofocus>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" placeholder="Senha do usuário" id="senha" required>
+                </div>
+                <div class="d-grid gap-2 my-2">
+                    <button type="submit" class="btn btn-success me-2 p-2"
+                        title="Efetue o Login com o seu usuário e senha">
+                        <i class="bi bi-file-lock"></i> Login </button>
+                    <button id="loginGoogle" type="button" class="btn btn-primary me-2"
+                        title="Efetue o login com a sua Conta Google">
+                        <i class="bi bi-google"></i> Logar com o Google
+                    </button>
+                </div>
+            </form>
+            <a href="novo-usuario.html">Ainda não tem uma conta?</a>
         </div>
-      </form>
-      <a href="novo-usuario.html">Ainda não tem uma conta?</a>
+        <div id="mensagemAlerta"></div>
     </div>
-    <div id="mensagemAlerta"></div>
-  </div>
-  <!-- Carregando os scripts do Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
-  <!-- Carregamento dos scripts do projeto-->
-  <script src="js/firebase.js"></script>
-  <script src="js/authentication.js"></script>
-  <script src="js/util.js"></script>
+    <!-- Carregando os scripts do Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+    <!-- Carregamento dos scripts do projeto-->
+    <script src="js/firebase/firebase.js"></script>
+    <script src="js/firebase/authentication.js"></script>
+    <script src="js/util/alerta.js"></script>
+    <script src="js/views/login.js"></script>
 </body>
 
 </html>
