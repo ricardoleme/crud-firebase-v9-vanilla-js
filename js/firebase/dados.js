@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 'use strict' //modo estrito
+'use strict' //modo estrito
 
 /**
  * obtemDados.
@@ -24,10 +24,10 @@
 async function obtemDados(collection) {
   let spinner = document.getElementById('carregandoDados')
   let tabela = document.getElementById('tabelaDados')
-  await firebase.database().ref(collection).on('value', (snapshot) => {
+  await firebase.database().ref(collection).orderByChild('nome').on('value', (snapshot) => {
     tabela.innerHTML = ''
     let cabecalho = tabela.insertRow()
-    cabecalho.className = 'table-info'
+    cabecalho.className = 'fundo-laranja-escuro'
     cabecalho.insertCell().textContent = 'Nome'
     cabecalho.insertCell().textContent = 'Nascimento'
     cabecalho.insertCell().textContent = 'Email'
@@ -43,24 +43,20 @@ async function obtemDados(collection) {
       //Criando as novas linhas na tabela
       let novaLinha = tabela.insertRow()
       novaLinha.insertCell().textContent = item.val().nome
-      novaLinha.insertCell().textContent = new Date(item.val().nascimento).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+      novaLinha.insertCell().textContent = new Date(item.val().nascimento).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
       novaLinha.insertCell().innerHTML = '<small>' + item.val().email + '</small>'
       novaLinha.insertCell().textContent = item.val().sexo
-      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR',{style: 'decimal', minimumFractionDigits: 2}).format(item.val().peso)
-      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR',{style: 'decimal', minimumFractionDigits: 2}).format(item.val().altura)
+      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().peso)
+      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().altura)
       novaLinha.insertCell().innerHTML = `<button class='btn btn-sm btn-danger' onclick=remover('${db}','${id}')><i class="bi bi-trash"></i> Excluir</button>
       <button class='btn btn-sm btn-warning' onclick=carregaDadosAlteracao('${db}','${id}')><i class="bi bi-pencil-square"></i> Editar</button>`
 
     })
     let rodape = tabela.insertRow()
-    rodape.className = 'table-info'
-    rodape.insertCell().textContent = ''
-    rodape.insertCell().textContent = ''
+    rodape.className = 'fundo-laranja-claro'
+    rodape.insertCell().colSpan = "6"
     rodape.insertCell().innerHTML = totalRegistros(collection)
-    rodape.insertCell().textContent = ''
-    rodape.insertCell().textContent = ''
-    rodape.insertCell().textContent = ''
-    rodape.insertCell().textContent = ''
+
   })
   spinner.classList.add('d-none') //oculta o carregando...
 }
@@ -74,23 +70,21 @@ async function obtemDados(collection) {
  */
 
 async function carregaDadosAlteracao(db, id) {
-  await firebase.database().ref(db).on('value', (snapshot) => {
-    snapshot.forEach(item => {
-      if (item.ref._delegate._path.pieces_[1] === id) {
-        document.getElementById('id').value = item.ref._delegate._path.pieces_[1]
-        document.getElementById('nome').value = item.val().nome
-        document.getElementById('email').value = item.val().email
-        document.getElementById('nascimento').value = item.val().nascimento
-        document.getElementById('peso').value = item.val().peso
-        document.getElementById('altura').value = item.val().altura
-        if(item.val().sexo==='Masculino'){ 
-          document.getElementById('sexoM').checked = true
-        } else {
-          document.getElementById('sexoF').checked = true
-        }
-      }
-    })
+  await firebase.database().ref(db + '/' + id).on('value', (snapshot) => {
+    document.getElementById('id').value = id
+    document.getElementById('nome').value = snapshot.val().nome
+    document.getElementById('email').value = snapshot.val().email
+    document.getElementById('nascimento').value = snapshot.val().nascimento
+    document.getElementById('peso').value = snapshot.val().peso
+    document.getElementById('altura').value = snapshot.val().altura
+    if (snapshot.val().sexo === 'Masculino') {
+      document.getElementById('sexoM').checked = true
+    } else {
+      document.getElementById('sexoF').checked = true
+    }
   })
+
+  document.getElementById('nome').focus() //Definimos o foco no campo nome
 }
 
 
@@ -107,16 +101,16 @@ function salvar(event, collection) {
   event.preventDefault() // evita que o formulário seja recarregado
   //Verifica os campos obrigatórios
   if (document.getElementById('nome').value === '') { alerta('⚠️É obrigatório informar o nome!', 'warning') }
-  else if (document.getElementById('email').value === '') { alerta('⚠️É obrigatório informar o email!','warning') }
-  else if (document.getElementById('nascimento').value === '') { alerta('⚠️É obrigatório informar o nascimento!','warning') }
-  else if (document.getElementById('peso').value < 0  || document.getElementById('peso').value > 300) { alerta('⚠️O peso deve ser um número entre 0 a 300','warning') }
+  else if (document.getElementById('email').value === '') { alerta('⚠️É obrigatório informar o email!', 'warning') }
+  else if (document.getElementById('nascimento').value === '') { alerta('⚠️É obrigatório informar o nascimento!', 'warning') }
+  else if (document.getElementById('peso').value < 0 || document.getElementById('peso').value > 300) { alerta('⚠️O peso deve ser um número entre 0 a 300', 'warning') }
   else if (document.getElementById('id').value !== '') { alterar(event, collection) }
   else { incluir(event, collection) }
 }
 
 
 async function incluir(event, collection) {
-  let uid = firebase.auth().currentUser.uid
+  let usuarioAtual = firebase.auth().currentUser
   let botaoSalvar = document.getElementById('btnSalvar')
   botaoSalvar.innerText = 'Aguarde...'
   event.preventDefault()
@@ -133,7 +127,13 @@ async function incluir(event, collection) {
     nascimento: values.nascimento,
     peso: values.peso,
     altura: values.altura,
-    usuario: uid
+    usuarioInclusao: {
+      uid: usuarioAtual.uid,
+      nome: usuarioAtual.displayName,
+      urlImagem: usuarioAtual.photoURL,
+      email: usuarioAtual.email,
+      dataInclusao: new Date()
+    }
   })
     .then(() => {
       alerta(`✅ Registro incluído com sucesso!`, 'success')
@@ -147,7 +147,7 @@ async function incluir(event, collection) {
 }
 
 async function alterar(event, collection) {
- let uid = firebase.auth().currentUser.uid
+  let usuarioAtual = firebase.auth().currentUser
   let botaoSalvar = document.getElementById('btnSalvar')
   botaoSalvar.innerText = 'Aguarde...'
   event.preventDefault()
@@ -156,7 +156,6 @@ async function alterar(event, collection) {
   const data = new FormData(form);
   //Obtendo os valores dos campos
   const values = Object.fromEntries(data.entries());
-  console.log(values)
   //Enviando os dados dos campos para o Firebase
   return await firebase.database().ref().child(collection + '/' + values.id).update({
     nome: values.nome.toUpperCase(),
@@ -165,18 +164,23 @@ async function alterar(event, collection) {
     nascimento: values.nascimento,
     peso: values.peso,
     altura: values.altura,
-    usuario: uid,
-    dataUltimaAlteracao: new Date()
+    usuarioAlteracao: {
+      uid: usuarioAtual.uid,
+      nome: usuarioAtual.displayName,
+      urlImagem: usuarioAtual.photoURL,
+      email: usuarioAtual.email,
+      dataAlteracao: new Date()
+    }
   })
     .then(() => {
-      alerta('✅ Registro alterado com sucesso!','success')
+      alerta('✅ Registro alterado com sucesso!', 'success')
       document.getElementById('formCadastro').reset()
       document.getElementById('id').value = ''
       botaoSalvar.innerHTML = '<i class="bi bi-save-fill"></i> Salvar'
     })
     .catch(error => {
-      console.log(error.code)
-      console.log(error.message)
+      console.error(error.code)
+      console.error(error.message)
       alerta('❌ Falha ao alterar: ' + error.message, 'danger')
     })
 }
@@ -196,8 +200,8 @@ async function remover(db, id) {
         alerta('✅ Registro removido com sucesso!', 'success')
       })
       .catch(error => {
-        console.log(error.code)
-        console.log(error.message)
+        console.error(error.code)
+        console.error(error.message)
         alerta('❌ Falha ao excluir: ' + error.message, 'danger')
       })
   }
@@ -218,7 +222,7 @@ function totalRegistros(collection) {
     if (snap.numChildren() === 0) {
       retorno = '⚠️ Ainda não há nenhum registro cadastrado!'
     } else {
-      retorno = `Total de Registros: <span class="badge bg-primary"> ${snap.numChildren()} </span>`
+      retorno = `Total: <span class="badge fundo-laranja-escuro"> ${snap.numChildren()} </span>`
     }
   })
   return retorno
