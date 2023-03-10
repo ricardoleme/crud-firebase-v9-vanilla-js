@@ -2,7 +2,7 @@
 
 Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD.
 
-> ⚠️ **Projeto utilizado nas aulas da disciplina de Programação para a Internet da Fatec Itu**
+> ⚠️ **Projeto utilizado nas aulas da disciplina de Programação para a Internet da [Fatec Itu](fatecitu.edu.br)**
 
 # 🧠 Contexto
 
@@ -36,6 +36,10 @@ https://ricardoleme.github.io/crud-firebase-v9-vanilla-js/
 ![Novo Usuário](images/novousuario.png "UI do Cadastro de um novo usuário (integrado ao Firebase v.9)")
 ![Menu Inicial](images/menuinicial.png "UI do Menu Inicial")
 ![Cadastro de Clientes](images/clientes.jpg "UI do Cadastro de Clientes (integrado ao Firebase v.9)")
+
+## 📚 Inspirações
+- https://github.com/GCMoura/first-crud-firebase
+- https://github.com/ArefinAnwar/todo-crud_firebaseSDK9
 
 
 Made with 💜, HTML, CSS and only Vanilla JS. 
