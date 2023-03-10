@@ -6,8 +6,21 @@ Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD.
 
 <p align="center">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=Apache&color=FB724C&labelColor=FFFFFF">
-
+<a href="https://fatecitu.edu.br" target="_blank">
   <img alt="License" src="https://img.shields.io/static/v1?label=Powered+by&message=Fatec+Itu&color=FB724C&labelColor=FFFFFF">
+  </a>
+<a href="https://www.linkedin.com/in/ricardo-leme/" target="_blank">
+  <img alt="Linkedin" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+  </a>
+
+  <img alt="HTML 5" src="https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white">
+
+  <img alt="CSS 3" src="https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white"> 
+
+  <img alt="JS" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+
+
+
 </p>
 
 # 🧠 Contexto
