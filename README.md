@@ -9,13 +9,15 @@ Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD.
 <a href="https://fatecitu.edu.br" target="_blank">
   <img alt="License" src="https://img.shields.io/static/v1?label=Powered+by&message=Fatec+Itu&color=FB724C&labelColor=FFFFFF">
   </a>
-
+</p>
+<p>
   <img alt="HTML 5" src="https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white">
 
-  <img alt="CSS 3" src="https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white"> 
+  <img alt="CSS 3" src="https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white&color=FEDCD2"> 
 
   <img alt="JS" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
 
+  <img alt="Firebase" src="https://img.shields.io/badge/Firebase-F29D0C?style=for-the-badge&logo=firebase&logoColor=white"> 
 
 
 </p>
@@ -69,6 +71,6 @@ Prof. Ms. Ricardo Leme <br>
 
 ## 📝 Licença
 
-Esse projeto está sob a licença Apache. Veja o arquivo LICENSE para mais detalhes.
+Esse projeto está sob a licença Apache. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 ---
 Made with 💜, HTML, CSS and only Vanilla JS. 
