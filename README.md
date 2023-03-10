@@ -42,6 +42,7 @@ O propósito desse pequeno sistema é mostrar que é possível desenvolvermos um
 - [ ] Abra o arquivo index.html no seu navegador, crie um novo usuário e navegue pelo seu CRUD! (ou se preferir, instale o [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) no VS Code, clique com o botão direito dentro do arquivo index.html e selecione Open with Live Server)
 
 ## 🌐 Veja uma demonstração online do projeto. 
+
 Utilize a sua conta Google para efetuar o Login, ou cadastre um novo usuário.
 
 https://ricardoleme.github.io/crud-firebase-v9-vanilla-js/
@@ -57,7 +58,8 @@ https://ricardoleme.github.io/crud-firebase-v9-vanilla-js/
 - https://github.com/ArefinAnwar/todo-crud_firebaseSDK9
 
 ## 💬 Contato
-Prof. Ms. Ricardo Leme
+
+Prof. Ms. Ricardo Leme <br>
 <a href="https://www.linkedin.com/in/ricardo-leme/" target="_blank">
   <img alt="Linkedin" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
 </a>
@@ -66,6 +68,7 @@ Prof. Ms. Ricardo Leme
 </a>
 
 ## 📝 Licença
+
 Esse projeto está sob a licença Apache. Veja o arquivo LICENSE para mais detalhes.
 ---
 Made with 💜, HTML, CSS and only Vanilla JS. 
