@@ -9,9 +9,6 @@ Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD.
 <a href="https://fatecitu.edu.br" target="_blank">
   <img alt="License" src="https://img.shields.io/static/v1?label=Powered+by&message=Fatec+Itu&color=FB724C&labelColor=FFFFFF">
   </a>
-<a href="https://www.linkedin.com/in/ricardo-leme/" target="_blank">
-  <img alt="Linkedin" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
-  </a>
 
   <img alt="HTML 5" src="https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white">
 
@@ -58,6 +55,15 @@ https://ricardoleme.github.io/crud-firebase-v9-vanilla-js/
 ## 📚 Inspirações
 - https://github.com/GCMoura/first-crud-firebase
 - https://github.com/ArefinAnwar/todo-crud_firebaseSDK9
+
+## 💬 Contato
+Prof. Ms. Ricardo Leme
+<a href="https://www.linkedin.com/in/ricardo-leme/" target="_blank">
+  <img alt="Linkedin" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+</a>
+<a href="mailto:ricardo.leme@fatec.sp.gov.br" target="_blank">
+  <img alt="Linkedin" src="https://img.shields.io/badge/Microsoft_Outlook-0078D4?style=for-the-badge&logo=microsoft-outlook&logoColor=white">
+</a>
 
 ## 📝 Licença
 Esse projeto está sob a licença Apache. Veja o arquivo LICENSE para mais detalhes.
