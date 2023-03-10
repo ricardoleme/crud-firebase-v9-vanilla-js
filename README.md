@@ -23,7 +23,19 @@ O propósito desse pequeno sistema é mostrar que é possível desenvolvermos um
 }
 ```
 
-- [ ] Abra o arquivo index.html no seu navegador, crie um novo usuário e navegue pelo seu CRUD!
+- [ ] Abra o arquivo index.html no seu navegador, crie um novo usuário e navegue pelo seu CRUD! (ou se preferir, instale o [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) no VS Code, clique com o botão direito dentro do arquivo index.html e selecione Open with Live Server)
+
+## 🌐 Veja uma demonstração do projeto. 
+Utilize a sua conta Google para efetuar o Login, ou cadastre um novo usuário.
+
+https://ricardoleme.github.io/crud-firebase-v9-vanilla-js/
+
+## 📷 Imagens do Projeto
+
+![Login](images/login.png "Login com Usuário e Senha ou Login via Google")
+![Novo Usuário](images/novousuario.png "UI do Cadastro de um novo usuário (integrado ao Firebase v.9)")
+![Menu Inicial](images/menuinicial.png "UI do Menu Inicial")
+![Cadastro de Clientes](images/clientes.jpg "UI do Cadastro de Clientes (integrado ao Firebase v.9)")
 
 
 Made with 💜, HTML, CSS and only Vanilla JS. 
