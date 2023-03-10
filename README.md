@@ -7,7 +7,7 @@ Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD.
 <p align="center">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=Apache&color=FB724C&labelColor=FFFFFF">
 
-  <img alt="License" src="https://img.shields.io/static/v1?label=license&message=Fatec+Itu&color=FB724C&labelColor=FFFFFF">
+  <img alt="License" src="https://img.shields.io/static/v1?label=Powered+by&message=Fatec+Itu&color=FB724C&labelColor=FFFFFF">
 </p>
 
 # 🧠 Contexto
