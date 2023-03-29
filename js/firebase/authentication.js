@@ -15,7 +15,8 @@
  */
  'use strict' //modo estrito
 
- const urlApp = '/crud-firebase-v9-vanilla-js/'
+//Defina a sua própria URL após o deploy
+ const urlApp = 'https://ricardoleme.github.io/crud-firebase-v9-vanilla-js'
 
 /**
  * novoUsuario.
@@ -30,7 +31,7 @@ function novoUsuario(email, senha) {
     .createUserWithEmailAndPassword(email, senha)
     .then((result) => {
       console.log(`Usuário Logado: ${JSON.stringify(result.user)}`)
-      window.location.href = `/home.html` //Direcionamos o usuário para a tela inicial
+      window.location.href = `${urlApp}/home.html` //Direcionamos o usuário para a tela inicial
     })
     .catch(error => {
       console.error(error.code)
@@ -66,7 +67,7 @@ function loginFirebase(email, senha) {
  * @return {object} O usuário logado
  */
 function loginGoogle() {
-  //Não esqueça de adicionar também o endereço 127.0.0.1 em Authentication/Settings no Firebase
+  //Não esqueça de adicionar também o endereço 127.0.0.1 em Authentication/Settings no Firebase para poder rodar localmente
 
   const provider = new firebase.auth.GoogleAuthProvider()
   firebase
