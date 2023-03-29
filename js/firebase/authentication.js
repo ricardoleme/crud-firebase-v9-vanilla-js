@@ -15,6 +15,8 @@
  */
  'use strict' //modo estrito
 
+ const urlApp = '/crud-firebase-v9-vanilla-js/'
+
 /**
  * novoUsuario.
  * Cria um novo usuário no Firebase.
@@ -50,7 +52,7 @@ function loginFirebase(email, senha) {
     .signInWithEmailAndPassword(email, senha)
     .then(result => {
       console.log(result.user)
-      window.location.href = `/home.html`
+      window.location.href = `${urlApp}/home.html`
     })
     .catch(error => {
       console.error(error.code)
@@ -65,14 +67,14 @@ function loginFirebase(email, senha) {
  */
 function loginGoogle() {
   //Não esqueça de adicionar também o endereço 127.0.0.1 em Authentication/Settings no Firebase
- const urlApp = '/crud-firebase-v9-vanilla-js/home.html'
+
   const provider = new firebase.auth.GoogleAuthProvider()
   firebase
     .auth()
     .signInWithPopup(provider)
     .then((result) => {
       console.log(`Usuário Google: ${JSON.stringify(result.user)}`)
-      window.location.href = urlApp
+      window.location.href = `${urlApp}/home.html`
     }).catch((error) => {
       alerta(`Erro: Não foi possível efetuar o login <br> ${errors[error.code]}`, 'danger')
     })
@@ -88,7 +90,7 @@ function logoutFirebase() {
     .auth()
     .signOut()
     .then(function () {
-      window.location.href = '/'
+      window.location.href = `${urlApp}/`
       localStorage.removeItem('usuarioId') //Remove o id do usuário atual no Local Storage
     })
     .catch(function (error) {
@@ -116,7 +118,7 @@ function verificaLogado() {
                       : imagemUsuario.innerHTML = `<img src="https://robohash.org/${user.email}" alt="Foto do Usuário" title="${user.email}" class="img rounded-circle pe-2" width="48" />`
       } else {
         console.error('Usuário não logado. Redirecionando...')
-        window.location.href = '/'
+        window.location.href = `${urlApp}/`
       }
     })
 }
