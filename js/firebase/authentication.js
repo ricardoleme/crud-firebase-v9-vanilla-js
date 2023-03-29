@@ -65,13 +65,14 @@ function loginFirebase(email, senha) {
  */
 function loginGoogle() {
   //Não esqueça de adicionar também o endereço 127.0.0.1 em Authentication/Settings no Firebase
+ const urlApp = '/crud-firebase-v9-vanilla-js/home.html'
   const provider = new firebase.auth.GoogleAuthProvider()
   firebase
     .auth()
     .signInWithPopup(provider)
     .then((result) => {
       console.log(`Usuário Google: ${JSON.stringify(result.user)}`)
-      window.location.href = `/home.html`
+      window.location.href = urlApp
     }).catch((error) => {
       alerta(`Erro: Não foi possível efetuar o login <br> ${errors[error.code]}`, 'danger')
     })
