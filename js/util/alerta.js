@@ -32,3 +32,5 @@ function alerta(mensagem, tipo) {
       wrapper.innerHTML = ''
     }, 3000);
   }
+
+ 

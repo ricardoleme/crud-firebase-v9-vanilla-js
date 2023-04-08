@@ -42,14 +42,14 @@ async function obtemDados(collection) {
       let id = item.ref._delegate._path.pieces_[1] //id do registro   
       //Criando as novas linhas na tabela
       let novaLinha = tabela.insertRow()
-      novaLinha.insertCell().textContent = item.val().nome
+      novaLinha.insertCell().innerHTML = '<small>' + item.val().nome + '</small>'
       novaLinha.insertCell().textContent = new Date(item.val().nascimento).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
       novaLinha.insertCell().innerHTML = '<small>' + item.val().email + '</small>'
       novaLinha.insertCell().textContent = item.val().sexo
       novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().peso)
       novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().altura)
-      novaLinha.insertCell().innerHTML = `<button class='btn btn-sm btn-danger' onclick=remover('${db}','${id}')><i class="bi bi-trash"></i> Excluir</button>
-      <button class='btn btn-sm btn-warning' onclick=carregaDadosAlteracao('${db}','${id}')><i class="bi bi-pencil-square"></i> Editar</button>`
+      novaLinha.insertCell().innerHTML = `<button class='btn btn-sm btn-danger' onclick=remover('${db}','${id}')><i class="bi bi-trash"></i></button>
+      <button class='btn btn-sm btn-warning' onclick=carregaDadosAlteracao('${db}','${id}')><i class="bi bi-pencil-square"></i></button>`
 
     })
     let rodape = tabela.insertRow()
@@ -73,6 +73,7 @@ async function carregaDadosAlteracao(db, id) {
   await firebase.database().ref(db + '/' + id).on('value', (snapshot) => {
     document.getElementById('id').value = id
     document.getElementById('nome').value = snapshot.val().nome
+    document.getElementById('cpf').value = snapshot.val().cpf
     document.getElementById('email').value = snapshot.val().email
     document.getElementById('nascimento').value = snapshot.val().nascimento
     document.getElementById('peso').value = snapshot.val().peso
@@ -119,6 +120,9 @@ async function incluir(event, collection) {
   const data = new FormData(form);
   //Obtendo os valores dos campos
   const values = Object.fromEntries(data.entries());
+  //obtendo a URL da imagem do avatar do cliente
+  var imgSrc = document.querySelector('.img-cliente img').getAttribute('src');
+  console.log(imgSrc);
   //Enviando os dados dos campos para o Firebase
   return await firebase.database().ref(collection).push({
     nome: values.nome.toUpperCase(),
@@ -127,6 +131,8 @@ async function incluir(event, collection) {
     nascimento: values.nascimento,
     peso: values.peso,
     altura: values.altura,
+    cpf: values.cpf,
+    foto: imgSrc,
     usuarioInclusao: {
       uid: usuarioAtual.uid,
       nome: usuarioAtual.displayName,
@@ -138,6 +144,9 @@ async function incluir(event, collection) {
     .then(() => {
       alerta(`✅ Registro incluído com sucesso!`, 'success')
       document.getElementById('formCadastro').reset() //limpa o form
+      //Limpamos o avatar do cliente
+      var avatar = document.querySelector(".img-cliente");
+      avatar.innerHTML = "";
       botaoSalvar.innerHTML = '<i class="bi bi-save-fill"></i> Salvar'
     })
     .catch(error => {
@@ -164,6 +173,7 @@ async function alterar(event, collection) {
     nascimento: values.nascimento,
     peso: values.peso,
     altura: values.altura,
+    cpf: values.cpf,
     usuarioAlteracao: {
       uid: usuarioAtual.uid,
       nome: usuarioAtual.displayName,
@@ -226,4 +236,22 @@ function totalRegistros(collection) {
     }
   })
   return retorno
+}
+
+/**
+ * Formata o valor do campo de CPF com pontos e traço enquanto o usuário digita os dados.
+ *
+ * @param {object} campo - O campo de entrada do CPF.
+ */
+function formatarCPF(campo) {
+  // Remove caracteres não numéricos
+  var cpf = campo.value.replace(/\D/g, '');
+
+  // Adiciona pontos e traço conforme o usuário digita
+  cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+  cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+  cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+  // Atualiza o valor do campo
+  campo.value = cpf;
 }

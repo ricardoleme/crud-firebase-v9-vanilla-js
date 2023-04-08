@@ -43,4 +43,7 @@ const firebaseConfig = {
 
 // Inicializando o Firebase
 firebase.initializeApp(firebaseConfig);
+// Crie uma referência para o Realtime Database do Firebase
 const database = firebase.database();
+// Crie uma referência para o armazenamento do Firebase
+const storageRef = firebase.storage().ref();
