@@ -1,8 +1,14 @@
 # 🔥 CRUD com autenticação integrado ao Firebase (v.9 SDK) utilizando apenas HTML, CSS e Javascript puro
 
-Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD.
+Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD. (São utilizados o Realtime Database, Authentication com email/senha e conta Gogole e Storage do Firebase)
 
 > ⚠️ **Projeto utilizado nas aulas da disciplina de Programação para a Internet da [Fatec Itu](fatecitu.edu.br)**
+
+<p align="center">
+<a href="https://github.com/users/ricardoleme/achievements/starstruck" target="_blank">
+<img alt="" src="https://github.githubassets.com/images/modules/profile/achievements/starstruck-default.png">
+<small>@ricardoleme created a repository that has many stars.⭐️⭐️⭐️</small>
+</p>
 
 <p align="center">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=Apache&color=FB724C&labelColor=FFFFFF">
