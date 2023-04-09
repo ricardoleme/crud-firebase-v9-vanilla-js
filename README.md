@@ -6,7 +6,7 @@ Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD. (São 
 
 <p align="center">
 <a href="https://github.com/users/ricardoleme/achievements/starstruck" target="_blank">
-<img alt="" src="https://github.githubassets.com/images/modules/profile/achievements/starstruck-default.png" width="50">
+<img alt="" src="https://github.githubassets.com/images/modules/profile/achievements/starstruck-default.png" width="50"><br>
 <small>This repository has many stars from community.⭐️⭐️⭐️</small>
 </p>
 
