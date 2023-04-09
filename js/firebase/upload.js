@@ -84,3 +84,11 @@ inputFile.addEventListener('change', (event) => {
   const nomeArquivo = arquivo.name;
   uploadImagem(arquivo, nomeArquivo)
 });
+
+/* Será necessário habilitar o CORS
+https://developer.bitmovin.com/encoding/docs/how-do-i-set-up-cors-for-my-google-cloud-storage-bucket
+
+Para listar o Bucket name: 
+gsutil ls 
+
+*/
