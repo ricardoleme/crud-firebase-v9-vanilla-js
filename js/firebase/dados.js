@@ -28,6 +28,7 @@ async function obtemDados(collection) {
     tabela.innerHTML = ''
     let cabecalho = tabela.insertRow()
     cabecalho.className = 'fundo-laranja-escuro'
+    cabecalho.insertCell().textContent = 'Avatar'
     cabecalho.insertCell().textContent = 'Nome'
     cabecalho.insertCell().textContent = 'Nascimento'
     cabecalho.insertCell().textContent = 'Email'
@@ -42,6 +43,7 @@ async function obtemDados(collection) {
       let id = item.ref._delegate._path.pieces_[1] //id do registro   
       //Criando as novas linhas na tabela
       let novaLinha = tabela.insertRow()
+      novaLinha.insertCell().innerHTML = '<img src="' + item.val().foto + '" alt="Avatar do Cliente" class="avatar"/>'
       novaLinha.insertCell().innerHTML = '<small>' + item.val().nome + '</small>'
       novaLinha.insertCell().textContent = new Date(item.val().nascimento).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
       novaLinha.insertCell().innerHTML = '<small>' + item.val().email + '</small>'
@@ -54,7 +56,7 @@ async function obtemDados(collection) {
     })
     let rodape = tabela.insertRow()
     rodape.className = 'fundo-laranja-claro'
-    rodape.insertCell().colSpan = "6"
+    rodape.insertCell().colSpan = "7"
     rodape.insertCell().innerHTML = totalRegistros(collection)
 
   })

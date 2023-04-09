@@ -31,6 +31,8 @@ function alerta(mensagem, tipo) {
     window.setTimeout(function () {
       wrapper.innerHTML = ''
     }, 3000);
+    //Iremos fazer o scroll até a div da mensagem
+        mensagemAlerta.scrollIntoView();
   }
 
  
