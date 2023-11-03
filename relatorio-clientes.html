@@ -67,70 +67,19 @@
   <div id="mensagemAlerta"></div>
   <div class="container-fluid mb-5">
     <div class="row">
-      <div class="col-md-5">
-        <h3 class="laranja-escuro"><i class="bi bi-person-badge"></i>Cadastro de Clientes</h3>
-        <form id="formCadastro" method="post">
-          <div class="form-group mt-3">
-            <label for="nome">Nome</label>
-            <input type="text" class="form-control text-uppercase" name="nome" id="nome" placeholder="Nome" autofocus>
-          </div>
-          <div class="form-group mt-3">
-            <label for="email">E-mail</label>
-            <input type="email" class="form-control text-lowercase" name="email" id="email" placeholder="Email">
-          </div>
-          <div class="form-group mt-3">
-            <label for="nascimento">Nascimento</label>
-            <input type="date" class="form-control" name="nascimento" id="nascimento"
-              onfocus="this.max=new Date().toISOString().split('T')[0]">
-          </div>
-          <div class="form-group mt-3">
-            <label for="cpf">CPF</label>
-            <input type="text" class="form-control" name="cpf" id="cpf" placeholder="999.999.999-99" maxlength="14"
-              title="Informe um CPF no formato 999.999.999-99" pattern="[0-9]{3}[.][0-9]{3}[.][0-9]{3}[-][0-9]{2}"
-              oninput="formatarCPF(this)">
-          </div>
-          <div class="form-group mt-3">
-            <label for="foto">Foto</label>
-            <div class="img-cliente my-3"></div>
-            <input type="file" class="form-control" name="foto" id="foto" accept="image/*" maxlength="1000000" required>
-          </div>
-          <div class="form-group mt-3">
-            <label for="peso">Peso</label>
-            <input type="number" class="form-control" name="peso" id="peso" min="0" max="300" step="0.10">
-          </div>
-          <div class="form-group mt-3">
-            <label for="altura">Altura</label>
-            <input type="number" class="form-control" name="altura" id="altura" min="0" max="2.5" step="0.10">
-          </div>
-          <div class="form-group mt-3">
-            <label for="sexo" class="me-3">Sexo</label>
-            <input type="radio" class="btn-check" name="sexo" id="sexoM" value="Masculino" checked>
-            <label class="btn btn-outline-info me-3" for="sexoM"><i class="bi bi-gender-male"></i> Masculino</label>
-            <input type="radio" class="btn-check" name="sexo" id="sexoF" value="Feminino">
-            <label class="btn btn-outline-danger" for="sexoF"><i class="bi bi-gender-female"></i> Feminino</label>
-          </div>
-          <div class="form-group">
-            <input type="hidden" class="form-control" name="id" id="id">
-          </div>
-          <button id="btnSalvar" class="btn btn-block btn-success my-4" onclick="salvar(event, 'clientes')"><i
-              class="bi bi-save-fill"></i> Salvar</button>
-          <button type="reset" class="btn btn-block btn-danger my-4"><i class="bi bi-x-square-fill"></i> Limpar</button>
-        </form>
-      </div>
+     
 
 
       <div class="col-md-7">
-        <h3 class="laranja-escuro"><i class="bi bi-database-check"></i>Listagem de Clientes</h3>
+        <h3 class="laranja-escuro"><i class="bi bi-printer"></i> Relatório de Clientes</h3>
         <button class="btn fundo-laranja-escuro" type="button" disabled id="carregandoDados">
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           Carregando os dados...
         </button>
-        <div class="form-group mt-3">          
-          <input type="text" class="form-control" id="filtroCliente" oninput="filtrarTabela('filtroCliente', 'tabelaDados')" placeholder="🔍 Procurar...">
+        <button id="gerarPDF" class="btn btn-danger"><i class="bi bi-printer"></i> Gerar PDF</button>
 
-        </div>
         
-        <div class="table-responsive">
+        <div class="table-responsive" id="relatorio">
           <table id="tabelaDados" class="table table-sm table-striped table-bordered mt-3">            
             <!-- Conteúdo dos dados do Firebase será inserido aqui -->
           </table>
@@ -147,7 +96,7 @@
         </div>
       </div>
     </div>
-  </footer>
+  </footer>  
   <!-- Carregando os scripts do Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-database-compat.js"></script>
@@ -156,9 +105,30 @@
   <!-- Carregamento dos scripts do projeto-->
   <script src="js/firebase/firebase.js"></script>
   <script src="js/firebase/authentication.js"></script>
-  <script src="js/firebase/dados.js"></script>
-  <script src="js/firebase/upload.js"></script>
+  <script src="js/firebase/dados.js"></script>  
   <script src="js/util/alerta.js"></script>
+  
+  <script>
+document.getElementById("gerarPDF").addEventListener("click", function() {
+  let tabela = document.getElementById("relatorio");
+  let janelaDeImpressao = window.open('', '', `width=${window.innerWidth},height=${window.innerHeight}`);
+
+  janelaDeImpressao.document.open();
+  janelaDeImpressao.document.write(`<html><head>  <link rel="stylesheet" href="css/estilo.css"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"></head><body><title>Relatório</title>`);
+  janelaDeImpressao.document.write(`<h1>Fatec Gym</h1>`);
+  janelaDeImpressao.document.write(tabela.outerHTML);
+  janelaDeImpressao.document.write(`<\/body><\/html>`);
+  janelaDeImpressao.document.close();
+
+  setTimeout(function() {
+    janelaDeImpressao.print();
+  }, 1000);
+});
+
+
+
+
+</script>
 
 </body>
 

@@ -26,16 +26,17 @@ async function obtemDados(collection) {
   let tabela = document.getElementById('tabelaDados')
   await firebase.database().ref(collection).orderByChild('nome').on('value', (snapshot) => {
     tabela.innerHTML = ''
-    let cabecalho = tabela.insertRow()
-    cabecalho.className = 'fundo-laranja-escuro'
-    cabecalho.insertCell().textContent = 'Avatar'
-    cabecalho.insertCell().textContent = 'Nome'
-    cabecalho.insertCell().textContent = 'Nascimento'
-    cabecalho.insertCell().textContent = 'Email'
-    cabecalho.insertCell().textContent = 'Sexo'
-    cabecalho.insertCell().textContent = 'Peso'
-    cabecalho.insertCell().textContent = 'Altura'
-    cabecalho.insertCell().innerHTML = 'Opções'
+    tabela.innerHTML += `<tr class='fundo-laranja-escuro'>    
+    <th>Avatar</th>
+    <th>Nome</th>
+    <th>Nascimento</th>
+    <th>Email</th>
+    <th>Sexo</th>
+    <th>Peso</th>
+    <th>Altura</th>
+    <th>Opções</th>`
+
+
 
     snapshot.forEach(item => {
       // Dados do Firebase
@@ -123,7 +124,7 @@ async function incluir(event, collection) {
   //Obtendo os valores dos campos
   const values = Object.fromEntries(data.entries());
   //obtendo a URL da imagem do avatar do cliente
-  var imgSrc = document.querySelector('.img-cliente img').getAttribute('src');
+  let imgSrc = document.querySelector('.img-cliente img').getAttribute('src');
   console.log(imgSrc);
   //Enviando os dados dos campos para o Firebase
   return await firebase.database().ref(collection).push({
@@ -147,7 +148,7 @@ async function incluir(event, collection) {
       alerta(`✅ Registro incluído com sucesso!`, 'success')
       document.getElementById('formCadastro').reset() //limpa o form
       //Limpamos o avatar do cliente
-      var avatar = document.querySelector(".img-cliente");
+      let avatar = document.querySelector(".img-cliente");
       avatar.innerHTML = "";
       botaoSalvar.innerHTML = '<i class="bi bi-save-fill"></i> Salvar'
     })
@@ -229,7 +230,7 @@ async function remover(db, id) {
  */
 
 function totalRegistros(collection) {
-  var retorno = '...'
+  let retorno = '...'
   firebase.database().ref(collection).on('value', (snap) => {
     if (snap.numChildren() === 0) {
       retorno = '⚠️ Ainda não há nenhum registro cadastrado!'
@@ -247,7 +248,7 @@ function totalRegistros(collection) {
  */
 function formatarCPF(campo) {
   // Remove caracteres não numéricos
-  var cpf = campo.value.replace(/\D/g, '');
+  let cpf = campo.value.replace(/\D/g, '');
 
   // Adiciona pontos e traço conforme o usuário digita
   cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
@@ -256,4 +257,33 @@ function formatarCPF(campo) {
 
   // Atualiza o valor do campo
   campo.value = cpf;
+}
+
+
+/**
+ * Filtra os elementos de uma tabela com base no valor inserido em um campo de filtro.
+ *
+ * @param {string} idFiltro - O ID do campo de filtro de entrada.
+ * @param {string} idTabela - O ID da tabela que será filtrada.
+ */
+function filtrarTabela(idFiltro, idTabela) {
+  var input, filter, table, tr, td, i, j, txtValue;
+  input = document.getElementById(idFiltro);
+  filter = input.value.toUpperCase();
+  table = document.getElementById(idTabela);
+  tr = table.getElementsByTagName("tr");
+
+  for (i = 1; i < tr.length; i++) {
+    tr[i].style.display = "none"; // Oculte todas as linhas do corpo da tabela inicialmente.
+    for (j = 0; j < tr[i].cells.length; j++) {
+      td = tr[i].cells[j];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = ""; // Exiba a linha se houver correspondência.
+          break; // Saia do loop interno quando encontrar uma correspondência.
+        }
+      }
+    }
+  }
 }
