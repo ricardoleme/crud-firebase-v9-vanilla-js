@@ -1,8 +1,7 @@
 # 🔥 CRUD com autenticação integrado ao Firebase (v.9 SDK) utilizando apenas HTML, CSS e Javascript puro
 
-Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD. (São utilizados o Realtime Database, Authentication com email/senha e conta Gogole e Storage do Firebase)
+Projeto em HTML, CSS e Vanilla Javascript que implementa um pequeno CRUD. (São utilizados o Realtime Database, Authentication com email/senha e conta Google e Storage do Firebase)
 
-> ⚠️ **Projeto utilizado nas aulas da disciplina de Programação para a Internet da [Fatec Itu](fatecitu.edu.br)**
 
 <p align="center">
 <a href="https://github.com/users/ricardoleme/achievements/starstruck" target="_blank">
@@ -37,12 +36,23 @@ O propósito desse pequeno sistema é mostrar que é possível desenvolvermos um
 - [ ] Inicialmente clone o projeto; 
 - [ ] Acesse https://firebase.google.com e crie um novo projeto Web.
 - [ ] Edite o arquivo firebase.js e cole nele as informações de conexão apresentadas pelo Firebase.
-- [ ] Acesse Realtime Database e em regras, informe que apenas usuários autenticados terão direito de acesso (escrita e leitura) aos dados:
+- [ ] Acesse _Realtime Database_ e em regras, informe que apenas usuários autenticados terão direito de acesso (escrita e leitura) aos dados:
 ```json
 {
   "rules": {
     ".read": "auth != null",
     ".write": "auth != null"
+  }
+}
+```
+- [ ] Acesse _Cloud Firestore_ e em regras, informe que apenas usuários autenticados terão direito de acesso (escrita e leitura) aos dados:
+```javascript
+​rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write : if request.auth != null;
+    }
   }
 }
 ```
