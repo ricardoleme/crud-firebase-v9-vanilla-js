@@ -27,13 +27,9 @@ async function obtemDados(collection) {
   await firebase.database().ref(collection).orderByChild('nome').on('value', (snapshot) => {
     tabela.innerHTML = ''
     tabela.innerHTML += `<tr class='fundo-laranja-escuro'>    
-    <th>Avatar</th>
     <th>Nome</th>
-    <th>Nascimento</th>
-    <th>Email</th>
-    <th>Sexo</th>
-    <th>Peso</th>
-    <th>Altura</th>
+    <th>Valor</th>
+    <th>Dias da Semana</th>    
     <th>Opções</th>`
 
 
@@ -43,21 +39,17 @@ async function obtemDados(collection) {
       let db = item.ref._delegate._path.pieces_[0] //collection
       let id = item.ref._delegate._path.pieces_[1] //id do registro   
       //Criando as novas linhas na tabela
-      let novaLinha = tabela.insertRow()
-      novaLinha.insertCell().innerHTML = '<img src="' + item.val().foto + '" alt="Avatar do Cliente" class="avatar"/>'
-      novaLinha.insertCell().innerHTML = '<small>' + item.val().nome + '</small>'
-      novaLinha.insertCell().textContent = new Date(item.val().nascimento).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
-      novaLinha.insertCell().innerHTML = '<small>' + item.val().email + '</small>'
-      novaLinha.insertCell().textContent = item.val().sexo
-      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().peso)
-      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().altura)
+      let novaLinha = tabela.insertRow()      
+      novaLinha.insertCell().innerHTML = '<small>' + item.val().nome + '</small>'      
+      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().valor)      
+      novaLinha.insertCell().textContent = item.val().diasSemana
       novaLinha.insertCell().innerHTML = `<button class='btn btn-sm btn-danger' onclick=remover('${db}','${id}')><i class="bi bi-trash"></i></button>
       <button class='btn btn-sm btn-warning' onclick=carregaDadosAlteracao('${db}','${id}')><i class="bi bi-pencil-square"></i></button>`
 
     })
     let rodape = tabela.insertRow()
     rodape.className = 'fundo-laranja-claro'
-    rodape.insertCell().colSpan = "7"
+    rodape.insertCell().colSpan = "3"
     rodape.insertCell().innerHTML = totalRegistros(collection)
 
   })
@@ -75,17 +67,15 @@ async function obtemDados(collection) {
 async function carregaDadosAlteracao(db, id) {
   await firebase.database().ref(db + '/' + id).on('value', (snapshot) => {
     document.getElementById('id').value = id
-    document.getElementById('nome').value = snapshot.val().nome
-    document.getElementById('cpf').value = snapshot.val().cpf
-    document.getElementById('email').value = snapshot.val().email
-    document.getElementById('nascimento').value = snapshot.val().nascimento
-    document.getElementById('peso').value = snapshot.val().peso
-    document.getElementById('altura').value = snapshot.val().altura
-    if (snapshot.val().sexo === 'Masculino') {
-      document.getElementById('sexoM').checked = true
-    } else {
-      document.getElementById('sexoF').checked = true
+    document.getElementById('nome').value = snapshot.val().nome || ''
+    document.getElementById('valor').value = (parseFloat(snapshot.val().valor || 0)).toFixed(2); // Handle cases where valor might be absent or not a number
+    const diasSelecionados = snapshot.val().diasSemana || []; // Handle cases where diasSemana might be absent
+
+    const select = document.getElementById('diasSemana');
+    for (const option of select.options) {
+      option.selected = diasSelecionados.includes(option.value);
     }
+    
   })
 
   document.getElementById('nome').focus() //Definimos o foco no campo nome
@@ -104,10 +94,27 @@ async function carregaDadosAlteracao(db, id) {
 function salvar(event, collection) {
   event.preventDefault() // evita que o formulário seja recarregado
   //Verifica os campos obrigatórios
-  if (document.getElementById('nome').value === '') { alerta('⚠️É obrigatório informar o nome!', 'warning') }
-  else if (document.getElementById('email').value === '') { alerta('⚠️É obrigatório informar o email!', 'warning') }
-  else if (document.getElementById('nascimento').value === '') { alerta('⚠️É obrigatório informar o nascimento!', 'warning') }
-  else if (document.getElementById('peso').value < 0 || document.getElementById('peso').value > 300) { alerta('⚠️O peso deve ser um número entre 0 a 300', 'warning') }
+  
+  if (document.getElementById('nome').value === '') {
+    document.getElementById('nome').focus()
+    alerta('⚠️É obrigatório informar o nome!', 'warning')
+  }
+  else if (document.getElementById('nome').value.length < 5) {
+    document.getElementById('nome').focus()
+    alerta(`⚠️O nome informado é muito curto. <br>Foram informados <strong> ${document.getElementById('nome').value.length} </strong> caracteres. Informe no mínimo 5 caracteres`, 'warning')
+  }
+  else if (document.getElementById('nome').value.length > 100) {
+    document.getElementById('nome').focus()
+    alerta(`⚠️O nome informado é muito longo. <br>Foram informados <strong> ${document.getElementById('nome').value.length} </strong> caracteres. Informe no máximo 100 caracteres`, 'warning')
+  } 
+  else if (document.getElementById('valor').value < 0 || document.getElementById('valor').value > 999.99) { 
+    document.getElementById('valor').focus()
+    alerta(`⚠️O valor do plano deve ser um número entre 0 a 999.99 e foi informado o valor ${document.getElementById('valor').value}`, 'warning') 
+  }  
+  else if (document.getElementById('diasSemana').value === '') {
+    document.getElementById('diasSemana').focus()
+    alerta('⚠️É obrigatório selecionar ao menos um dia da semana para o plano!', 'warning')
+  }
   else if (document.getElementById('id').value !== '') { alterar(event, collection) }
   else { incluir(event, collection) }
 }
@@ -123,19 +130,15 @@ async function incluir(event, collection) {
   const data = new FormData(form);
   //Obtendo os valores dos campos
   const values = Object.fromEntries(data.entries());
-  //obtendo a URL da imagem do avatar do cliente
-  let imgSrc = document.querySelector('.img-cliente img').getAttribute('src');
-  console.log(imgSrc);
+  //Obtendo os dias selecionados
+  const diasSelecionados = Array.from(document.getElementById('diasSemana').selectedOptions)
+  .map(option => option.value);
+
   //Enviando os dados dos campos para o Firebase
   return await firebase.database().ref(collection).push({
     nome: values.nome.toUpperCase(),
-    email: values.email.toLowerCase(),
-    sexo: values.sexo,
-    nascimento: values.nascimento,
-    peso: values.peso,
-    altura: values.altura,
-    cpf: values.cpf,
-    foto: imgSrc,
+    valor: values.valor,
+    diasSemana: diasSelecionados,    
     usuarioInclusao: {
       uid: usuarioAtual.uid,
       nome: usuarioAtual.displayName,
@@ -146,10 +149,7 @@ async function incluir(event, collection) {
   })
     .then(() => {
       alerta(`✅ Registro incluído com sucesso!`, 'success')
-      document.getElementById('formCadastro').reset() //limpa o form
-      //Limpamos o avatar do cliente
-      let avatar = document.querySelector(".img-cliente");
-      avatar.innerHTML = "";
+      document.getElementById('formCadastro').reset() //limpa o form           
       botaoSalvar.innerHTML = '<i class="bi bi-save-fill"></i> Salvar'
     })
     .catch(error => {
@@ -168,15 +168,14 @@ async function alterar(event, collection) {
   const data = new FormData(form);
   //Obtendo os valores dos campos
   const values = Object.fromEntries(data.entries());
+    //Obtendo os dias selecionados
+    const diasSelecionados = Array.from(document.getElementById('diasSemana').selectedOptions)
+    .map(option => option.value);
   //Enviando os dados dos campos para o Firebase
   return await firebase.database().ref().child(collection + '/' + values.id).update({
     nome: values.nome.toUpperCase(),
-    email: values.email.toLowerCase(),
-    sexo: values.sexo,
-    nascimento: values.nascimento,
-    peso: values.peso,
-    altura: values.altura,
-    cpf: values.cpf,
+    valor: values.valor,
+    diasSemana: diasSelecionados,   
     usuarioAlteracao: {
       uid: usuarioAtual.uid,
       nome: usuarioAtual.displayName,
@@ -286,4 +285,25 @@ function filtrarTabela(idFiltro, idTabela) {
       }
     }
   }
+}
+
+// Função para validar o formato da data de nascimento
+function validarDataNascimento(dataNascimento) {
+  // Converte a string da data de nascimento para um objeto Date
+  const dataNascimentoConvertida = new Date(dataNascimento)
+  // Verifica se a data de nascimento é válida (não NaN)
+  if (isNaN(dataNascimentoConvertida)) {
+    return false
+  }
+  // Obtém a data de hoje
+  const dataHoje = new Date()
+  // Compara a data de nascimento com a data de hoje
+  return dataNascimentoConvertida < dataHoje
+}
+
+// Função para validar o formato do email
+function validarEmail(email) {
+  // Expressão regular para validar o formato do email
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(email);
 }

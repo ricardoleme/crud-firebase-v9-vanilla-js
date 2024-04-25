@@ -35,9 +35,15 @@ const firebaseConfig = {
 * Nas regras do Realtime Database, informe:
 * {
   "rules": {
+    "clientes":{
+    ".read": "auth != null",
+    ".write": "auth != null"
+  },
+    "usuarios":{
     ".read": "auth != null",
     ".write": "auth != null"
   }
+ }
 }
 */
 

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--/**
  * Copyright 2023 Prof. Ms. Ricardo Leme All Rights Reserved.
  *
@@ -13,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */-->
-<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -27,7 +27,7 @@
   <title>Menu Inicial</title>
 </head>
 
-<body onload="verificaLogado()">
+<body onload="verificaLogado();obtemDados('planos')">
   <nav class="navbar navbar-expand-lg navbar-light fundo-laranja-claro">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Fatec Gym</a>
@@ -44,7 +44,7 @@
             <a class="nav-link" href="clientes.html"><i class="bi bi-person-vcard"></i> Clientes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="planos.html"><i class="bi bi-award"></i> Planos</a>
+            <a class="nav-link active" href="planos.html"><i class="bi bi-award"></i> Planos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="relatorio-clientes.html"><i class="bi bi-journal-check"></i> Relatórios</a>
@@ -53,10 +53,11 @@
       </div>
       <div class="text-right">
         <ul class="navbar-nav ms-auto flex-nowrap">
-         
+
           <div id="imagemUsuario"></div>
-  <li class="nav-item">
-            <button class="btn  btn-block fundo-laranja-escuro" onclick="logoutFirebase()"><i class="bi bi-box-arrow-in-right"></i> Logout</button>
+          <li class="nav-item">
+            <button class="btn  btn-block fundo-laranja-escuro" onclick="logoutFirebase()"><i
+                class="bi bi-box-arrow-in-right"></i> Logout</button>
           </li>
         </ul>
       </div>
@@ -64,19 +65,64 @@
   </nav>
   <div class="container-fluid p-2 fundo-laranja-escuro text-light text-center">
     <h1>Controle da Academia</h1>
-  
-  </div>
 
-  <div class="card mt-5 mx-auto" style="width: 20rem;">
-    <img src="images/undraw_happy_announcement.svg" alt="Seja bem vindo" title="Seja bem vindo">
-    <div class="card-body">
-      <h5 class="card-title">Seja bem vindo!</h5>
-      <p class="card-text"><i class="bi bi-arrow-up-left-square"></i> Utilize o menu superior para ter acesso a todas as opções do sistema</p>
+  </div>
+  <div id="mensagemAlerta"></div>
+  <div class="container-fluid mb-5">
+    <div class="row">
+      <div class="col-md-5">
+        <h3 class="laranja-escuro"><i class="bi bi-person-badge"></i>Cadastro dos Planos da Academia</h3>
+        <form id="formCadastro" method="post">
+          <div class="form-group mt-3">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control text-uppercase" name="nome" id="nome" placeholder="Nome" autofocus>
+          </div>
+          <div class="form-group mt-3">
+            <label for="valor">Valor</label>
+            <input type="number" class="form-control" name="valor" id="valor" min="0" max="999.99" step="0.10">
+          </div>  
+          <div class="form-group mt-3">
+            <label for="diasSemana">Dias da Semana</label>
+            <small id="diasSemanaHelp" class="form-text text-muted">Selecione com o CTRL os dias</small>
+            <select id="diasSemana" required multiple class="form-control">
+              <option value="Segunda">Segunda</option>
+              <option value="Terça">Terça</option>
+              <option value="Quarta">Quarta</option>
+              <option value="Quinta">Quinta</option>
+              <option value="Sexta">Sexta</option>
+              <option value="Sábado">Sábado</option>
+            </select>
+          </div>          
+          <div class="form-group">
+            <input type="hidden" class="form-control" name="id" id="id">
+          </div>
+          <button id="btnSalvar" class="btn btn-block btn-success my-4" onclick="salvar(event, 'planos')"><i
+              class="bi bi-save-fill"></i> Salvar</button>
+          <button type="reset" class="btn btn-block btn-danger my-4"><i class="bi bi-x-square-fill"></i> Limpar</button>
+        </form>
+      </div>
+
+
+      <div class="col-md-7">
+        <h3 class="laranja-escuro"><i class="bi bi-database-check"></i>Listagem dos Planos</h3>
+        <button class="btn fundo-laranja-escuro" type="button" disabled id="carregandoDados">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Carregando os dados...
+        </button>
+        <div class="form-group mt-3">          
+          <input type="text" class="form-control" id="filtroCliente" oninput="filtrarTabela('filtroCliente', 'tabelaDados')" placeholder="🔍 Procurar...">
+
+        </div>
+        
+        <div class="table-responsive">
+          <table id="tabelaDados" class="table table-sm table-striped table-bordered mt-3">            
+            <!-- Conteúdo dos dados do Firebase será inserido aqui -->
+          </table>
+        </div>
+      </div>
     </div>
   </div>
-
- 
-  <footer class="bd-footer py-1 fundo-laranja-escuro fixed-bottom">
+  <footer class="bd-footer mt-5 py-1 fundo-laranja-escuro fixed-bottom">
     <div class="container py-1">
       <div class="row">
         <div class="col-md-6">
@@ -94,7 +140,9 @@
   <!-- Carregamento dos scripts do projeto-->
   <script src="js/firebase/firebase.js"></script>
   <script src="js/firebase/authentication.js"></script>
+  <script src="js/firebase/dadosPlano.js"></script>  
   <script src="js/util/alerta.js"></script>
+
 </body>
 
 </html>

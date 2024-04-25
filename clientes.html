@@ -41,7 +41,10 @@
             <a class="nav-link active" aria-current="page" href="home.html"><i class="bi bi-house"></i> Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="clientes.html"><i class="bi bi-person-vcard"></i> Clientes</a>
+            <a class="nav-link active" href="clientes.html"><i class="bi bi-person-vcard"></i> Clientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="planos.html"><i class="bi bi-award"></i> Planos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="relatorio-clientes.html"><i class="bi bi-journal-check"></i> Relatórios</a>
@@ -80,8 +83,7 @@
           </div>
           <div class="form-group mt-3">
             <label for="nascimento">Nascimento</label>
-            <input type="date" class="form-control" name="nascimento" id="nascimento"
-              onfocus="this.max=new Date().toISOString().split('T')[0]">
+            <input type="date" class="form-control" name="nascimento" id="nascimento">
           </div>
           <div class="form-group mt-3">
             <label for="cpf">CPF</label>
@@ -156,7 +158,7 @@
   <!-- Carregamento dos scripts do projeto-->
   <script src="js/firebase/firebase.js"></script>
   <script src="js/firebase/authentication.js"></script>
-  <script src="js/firebase/dados.js"></script>
+  <script src="js/firebase/dadosCliente.js"></script>
   <script src="js/firebase/upload.js"></script>
   <script src="js/util/alerta.js"></script>
 
